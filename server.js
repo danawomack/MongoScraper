@@ -13,13 +13,21 @@ var Article = require("./models/Article.js");
 var request = require("request");
 var cheerio = require("cheerio");
 
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// Database configuration with mongoose 
+// not sure which direction to go in with this. I tried the instructions from the homework but it isn't working for me
+mongoose.connect("mongodb://user:password1@ds117111.mlab.com:17111/heroku_twzvdhhk");
+mongoose.connect("mongodb://localhost/mongoscraper");
+var db = mongoose.connection;
+
+
+// // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoscraper";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+// mongoose.Promise = Promise;
+// mongoose.connect(MONGODB_URI);
 
 
 //Define port
@@ -46,10 +54,6 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
-// Database configuration with mongoose
-// mongoose.connect("mongodb://user:password1@ds117111.mlab.com:17111/heroku_twzvdhhk");
-// mongoose.connect("mongodb://localhost/mongoscraper");
-// var db = mongoose.connection;
 
 // Show any mongoose errors
 db.on("error", function(error) {
